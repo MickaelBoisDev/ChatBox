@@ -1,15 +1,15 @@
 <template>
     <div>
-      <RegisterComponent />
+      <RoomListComponent />
     </div>
   </template>
   
   <script>
-  import RegisterComponent from '../components/auth/RegisterComponent.vue';
+  import RoomListComponent from '../components/RoomListComponent.vue';
   
   export default {
     components: {
-      RegisterComponent
+        RoomListComponent
     },
   };
   </script>

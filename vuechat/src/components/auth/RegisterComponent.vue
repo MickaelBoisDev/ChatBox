@@ -10,6 +10,8 @@
 </template>
   
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -22,11 +24,14 @@ export default {
     methods: {
         async register() {
             try {
-                const response = await axios.post(process.env.VUE_APP_DJANGO_BASE_URL + 'register/', {
+                const djangoBaseUrl = import.meta.env.VITE__DJANGO_BASE_URL;
+                console.log(djangoBaseUrl + 'register/');
+                const response = await axios.post(djangoBaseUrl + 'register/', {
                     username: this.username,
                     password: this.password,
                     password2: this.passwordConfirmation,
                 });
+                console.log(response);
                 if (response.status === 200) {
                     if (response.data.token) {
                         localStorage.setItem('token', response.data.token);
@@ -40,7 +45,7 @@ export default {
             }
         },
         async logout() {
-            localStorage.removeItem('token');
+            localStorage.removeItem('access_token');
             localStorage.removeItem('currentUser');
         }
     },

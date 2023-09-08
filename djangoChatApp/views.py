@@ -11,6 +11,8 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
+from .serializers import RoomSerializer
+from rest_framework.views import APIView
 
 
 def list_rooms(request):
@@ -63,6 +65,7 @@ def logout_view(request):
 
 @api_view(['POST'])
 def register_view(request):
+    print("letlet")
     username = request.data.get('username')
     password = request.data.get('password')
     password2 = request.data.get('password2')
@@ -77,3 +80,10 @@ def register_view(request):
             return Response({"message": "Ce nom d'utilisateur est déjà pris"}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({"message": "Les mots de passe ne correspondent pas"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RoomListView(APIView):
+    def get(self, request, format=None):
+        rooms = Room.objects.all()
+        serializer = RoomSerializer(rooms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -39,6 +39,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
+    path('api/rooms/', views.RoomListView.as_view(), name='room-list'),
+
 ]
 # static css admin files
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
