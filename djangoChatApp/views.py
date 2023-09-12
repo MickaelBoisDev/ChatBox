@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Room
+from .models import Room, Message
 from django.contrib.auth import authenticate
 
 from rest_framework.response import Response
@@ -12,6 +12,9 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
 from .serializers import RoomSerializer
+from .serializers import MessageSerializer
+
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 
 
@@ -87,3 +90,11 @@ class RoomListView(APIView):
         rooms = Room.objects.all()
         serializer = RoomSerializer(rooms, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class RoomMessagesListView(ListAPIView):
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        room_id = self.kwargs['id']
+        return Message.objects.filter(room_id=room_id)    

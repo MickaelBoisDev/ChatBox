@@ -10,30 +10,21 @@ const routes = [
     name: 'Chat',
     component: ChatRoomVue,
     meta: { requiresAuth: true },
-    beforeEnter: (to, from, next) => {
-      const isAuthenticated = !!localStorage.getItem('access_token');
-      console.log("pas co", isAuthenticated);
-      if (!isAuthenticated) {
-        next({ name: 'Login' }); // rediriger vers la page de connexion
-      } else {
-        next(); // permettre la navigation
-      }
-    },
+    
+  },
+  {
+      path: '/room/:roomId',
+      name: 'ChatRoom',
+      component: ChatRoomVue,
+      props: true,
+      meta: { requiresAuth: true },
   },
   {
     path: '/rooms',
     name: 'Rooms',
     component: RoomsPageVue,
     meta: { requiresAuth: true },
-    beforeEnter: (to, from, next) => {
-      const isAuthenticated = !!localStorage.getItem('access_token');
-      console.log("pas co", isAuthenticated);
-      if (!isAuthenticated) {
-        next({ name: 'Login' }); // rediriger vers la page de connexion
-      } else {
-        next(); // permettre la navigation
-      }
-    },
+   
   },
   {
     path: '/',
@@ -53,6 +44,7 @@ const routes = [
     name: 'Register',
     component: RegisterPageVue
   },
+  
 
 ]
 

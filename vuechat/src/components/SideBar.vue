@@ -2,8 +2,8 @@
     <div class="sidebar">
       <ul class="sidebar-menu">
         <li>
-          <RouterLink to="/chat" active-class="active" class="sidebar-link">
-            <i class="fas fa-comments"></i> Chat Rooms
+          <RouterLink to="/rooms" active-class="active" class="sidebar-link">
+            <i class="fas fa-comments"></i> Rooms
           </RouterLink>
         </li>
         <li>

@@ -9,7 +9,6 @@
 
 <script>
 import axios from 'axios';
-
 export default {
     data() {
         return {
@@ -22,6 +21,7 @@ export default {
     methods: {
         async login() {
             try {
+                const router = this.$router; 
                 const djangoBaseUrl = import.meta.env.VITE__DJANGO_BASE_URL;
                 let response = await axios.post(djangoBaseUrl + 'login/', {
                     username: this.username,
@@ -35,6 +35,7 @@ export default {
                         console.log(data);
                         localStorage.setItem('currentUser', JSON.stringify(data.user));
                         this.errorMessage = null;
+                        router.push({ name: 'Rooms'});
                     }
 
                 } else {

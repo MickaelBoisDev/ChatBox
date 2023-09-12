@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Room
+from .models import Message
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,4 +15,10 @@ class UserSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
+        fields = '__all__'  # Ajustez cette liste pour inclure les champs que vous voulez
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
         fields = '__all__'  # Ajustez cette liste pour inclure les champs que vous voulez
