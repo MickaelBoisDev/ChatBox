@@ -1,5 +1,4 @@
-import { ref, watchEffect } from 'vue';
-
+import { ref, watchEffect, onMounted } from 'vue';
 export default function useWebSocket(url, token) {
     const socketRef = ref(null);
     const messages = ref([]);
@@ -7,11 +6,11 @@ export default function useWebSocket(url, token) {
     watchEffect(() => {
         // Ajoute le token à l'URL s'il est fourni
         const socketUrl = token ? `${url}?token=${token}` : url;
-        
+        console.log("Socket URL :", socketUrl);
         // Crée une nouvelle instance de WebSocket
         const socket = new WebSocket(socketUrl);
         socketRef.value = socket;
-        
+    
         // Défini le gestionnaire d'événements pour les messages entrants
         socket.onmessage = (event) => {
             console.log(event);
@@ -32,9 +31,8 @@ export default function useWebSocket(url, token) {
     // Crée une fonction pour envoyer des messages via la WebSocket
     function sendMessage(messageContent) {
         if (socketRef.value && socketRef.value.readyState === WebSocket.OPEN) {
-            const message = { message: messageContent };  // Ajoutez d'autres informations si nécessaire
-            console.log(message);
-            socketRef.value.send(JSON.stringify(message));
+            console.log(messageContent);
+            socketRef.value.send(JSON.stringify(messageContent));
         }
     }
 

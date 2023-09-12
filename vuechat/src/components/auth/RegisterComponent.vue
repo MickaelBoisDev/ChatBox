@@ -1,5 +1,7 @@
 <template>
     <div class="register-container">
+        <h1>Inscription</h1>
+
         <input class="register-input" v-model="username" placeholder="Nom d'utilisateur" />
         <input type="password" class="register-input" v-model="password" placeholder="Mot de passe" />
         <input type="password" class="register-input" v-model="passwordConfirmation"
@@ -58,10 +60,10 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
     padding: 20px;
-    box-sizing: border-box;
+
+
+
 }
 
 .register-input {

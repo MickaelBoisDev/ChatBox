@@ -30,7 +30,6 @@ export default {
 .chat-room {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 </style>
   

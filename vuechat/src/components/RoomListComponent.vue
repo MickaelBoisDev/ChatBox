@@ -1,6 +1,6 @@
 <template>
     <div v-if="rooms && rooms.length">
-        <h1>Liste Rooms :</h1>
+        <h1 class="title">Rooms</h1>
         <div class="room-list">
             <div v-for="room in rooms" :key="room.id" class="room-card" @click="joinRoom(room.id)">
                 <h2>{{ room.name }}</h2>
@@ -41,7 +41,7 @@ export default {
             router.push({ name: 'ChatRoom', params: { roomId } });
         };
 
-        onMounted(fetchRooms); 
+        onMounted(fetchRooms);
         return { rooms, joinRoom };
     }
 }
@@ -49,30 +49,41 @@ export default {
 
 
 <style scoped>
+.title {
+    text-align: start;
+}
+
 .room-list {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
 }
 
 .room-card {
-    background: #96cfac;
+    background: #aa81bb49;
     border-radius: 12px;
-    padding: 20px;
-    width: 200px;
+    padding: 1.2rem;
+    color: rgb(192, 192, 192);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: transform 0.3s;
     text-align: center;
+    transition: all 0.3s ease;
+
 }
 
 .room-card:hover {
-    transform: translateY(-10px);
+    background: #140c1849;
+    color: white;
+
+    font-size: 1.5rem;
 }
+
+
 
 .room-card h2 {
     margin: 0 0 10px;
     font-size: 1.5em;
+
 }
 
 .room-card p {

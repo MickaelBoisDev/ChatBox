@@ -2,8 +2,11 @@
     <div class="chat-box">
         <div class="messages">
             <div class="message" v-for="message in messages" :key="message.id">
+                <div class="message-username">
+                    {{ message.username }}
+                </div>
                 <div class="message-content">
-                    {{ message.message  }}
+                    {{ message.message }}
                 </div>
                 <div class="message-timestamp">
                     {{ message.timestamp }}
@@ -11,8 +14,8 @@
             </div>
         </div>
         <div class="message-input">
-            <input type="text" v-model="newMessage" @keyup.enter="sendMessage" placeholder="Entrez votre message ici">
-            <button @click="sendMessage">Envoyer</button>
+            <input type="text" v-model="newMessage" @keyup.enter="handleSendMessage" placeholder="Entrez votre message ici">
+            <button @click="handleSendMessage">Envoyer</button>
         </div>
     </div>
 </template>
@@ -34,31 +37,31 @@ export default {
     },
     setup(props) {
         const djangoBaseUrl = import.meta.env.VITE__DJANGO_BASE_URL_WEBSOCKET;
-        console.log(props.roomId);
         const url = `${djangoBaseUrl}/ws/rooms/${props.roomId}/`;
         const access_token = localStorage.getItem('access_token');
 
         const { messages, sendMessage } = useWebSocket(url, access_token);
-        console.log(messages.value);
-
+        console.log(messages, sendMessage);
         return { messages, sendMessage };
     },
     methods: {
         handleSendMessage() {
             if (this.newMessage.trim()) {
-                this.sendMessage(this.newMessage.trim());
+                // const currentUser = localStorage.getItem('currentUser');
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+                console.log(currentUser);
+                if (!currentUser) {
+                    throw new Error('Their is not CurrentUser')
+                }
+                const messageContent = {
+                    text: this.newMessage.trim(),
+                    user_id: currentUser.id,
+                }
+                this.sendMessage(messageContent);
                 this.newMessage = '';
             }
         },
-    },
-    mounted() {
-        // Initialize WebSocket connection
-        const djangoBaseUrl = import.meta.env.VITE__DJANGO_BASE_URL_WEBSOCKET;
-
-        this.socket = new WebSocket(`${djangoBaseUrl}/ws/rooms/` + this.roomId + '/');
-
-        // Listen for new messages
-        this.socket.addEventListener('message', this.receiveMessage);
     },
     beforeDestroy() {
         this.socket.close();
@@ -90,6 +93,11 @@ export default {
 .message-timestamp {
     font-size: 0.8em;
     color: #888;
+    margin-top: 5px;
+}
+.message-username {
+    font-size: 1em;
+    color: #a27171;
     margin-top: 5px;
 }
 
